@@ -1,35 +1,36 @@
-
+// server.js
 const express = require('express');
-const passport = require('passport');
-const { createClient } = require('@supabase/supabase-js');
+const supabase = require('./supabaseClient');  // 引入 Supabase 客户端
+
 const app = express();
 const port = 8000;
 
-// Supabase setup
-const supabaseUrl = 'https://xyzcompany.supabase.co';
-const supabaseKey = 'your-supabase-key';
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-// Middleware
+// 设置为 JSON 格式的请求体
 app.use(express.json());
-app.use(passport.initialize());
 
-// Sample login route
-app.post('/auth/login', (req, res) => {
-  // Handle login logic here
-  res.send({ message: 'Login successful' });
+// 获取所有课程
+app.get('/courses', async (req, res) => {
+  const { data, error } = await supabase.from('courses').select('*');
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
+  res.json(data);  // 返回查询到的课程数据
 });
 
-// Get courses
-app.get('/courses', async (req, res) => {
+// 添加课程
+app.post('/courses', async (req, res) => {
+  const { name, code, start_time, end_time, semester_id } = req.body;
   const { data, error } = await supabase
     .from('courses')
-    .select('*');
-  if (error) return res.status(400).send(error);
-  res.json(data);
+    .insert([{ name, code, start_time, end_time, semester_id }]);
+
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
+  res.json(data);  // 返回插入后的课程数据
 });
 
-// Start server
+// 启动服务
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
