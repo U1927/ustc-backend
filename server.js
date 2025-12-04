@@ -3,7 +3,7 @@ const express = require('express');
 const supabase = require('./supabaseClient');  // 引入 Supabase 客户端
 
 const app = express();
-const port = 3000;
+const port = 8000;
 
 app.use(express.json());  // 允许接收 JSON 格式的请求体
 
