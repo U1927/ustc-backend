@@ -1,16 +1,13 @@
 // server.js
 const express = require('express');
-const cors = require('cors');
 const supabase = require('./supabaseClient');  // 引入 Supabase 客户端
 
 const app = express();
-const port = 8000;
+const port = 3000;
 
-app.use(cors());
-// 设置为 JSON 格式的请求体
-app.use(express.json());
+app.use(express.json());  // 允许接收 JSON 格式的请求体
 
-// 获取所有课程
+// GET 请求：查询所有课程
 app.get('/courses', async (req, res) => {
   const { data, error } = await supabase.from('courses').select('*');
   if (error) {
@@ -19,7 +16,7 @@ app.get('/courses', async (req, res) => {
   res.json(data);  // 返回查询到的课程数据
 });
 
-// 添加课程
+// POST 请求：插入新课程
 app.post('/courses', async (req, res) => {
   const { name, code, start_time, end_time, semester_id } = req.body;
   const { data, error } = await supabase
@@ -32,7 +29,6 @@ app.post('/courses', async (req, res) => {
   res.json(data);  // 返回插入后的课程数据
 });
 
-// 启动服务
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
