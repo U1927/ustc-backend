@@ -1,10 +1,12 @@
 // server.js
 const express = require('express');
+const cors = require('cors');  // 引入 CORS
 const supabase = require('./supabaseClient');  // 引入 Supabase 客户端
 
 const app = express();
 const port = 8000;
 
+app.use(cors());
 app.use(express.json());  // 允许接收 JSON 格式的请求体
 
 // GET 请求：查询所有课程
