@@ -1,0 +1,19 @@
+
+{
+  "name": "student-scheduler-backend",
+  "version": "1.0.0",
+  "description": "Backend service for student scheduler",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "axios": "^0.21.1",
+    "passport": "^0.4.1",
+    "passport-ustc": "^1.0.0",
+    "supabase-js": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
