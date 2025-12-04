@@ -1,10 +1,12 @@
 // server.js
 const express = require('express');
+const cors = require('cors');
 const supabase = require('./supabaseClient');  // 引入 Supabase 客户端
 
 const app = express();
 const port = 8000;
 
+app.use(cors());
 // 设置为 JSON 格式的请求体
 app.use(express.json());
 
